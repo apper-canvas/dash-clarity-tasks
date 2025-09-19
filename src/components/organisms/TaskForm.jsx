@@ -25,10 +25,10 @@ const TaskForm = ({
 
   useEffect(() => {
     if (task) {
-      setFormData({
-        title: task.title,
+setFormData({
+        title: task.title || "",
         description: task.description || "",
-        priority: task.priority,
+        priority: task.priority || "medium",
         categoryId: task.categoryId || "",
         dueDate: task.dueDate ? format(new Date(task.dueDate), "yyyy-MM-dd") : ""
       })
@@ -61,9 +61,9 @@ const TaskForm = ({
     setIsSubmitting(true)
 
     try {
-      const taskData = {
+const taskData = {
         ...formData,
-        dueDate: formData.dueDate ? new Date(formData.dueDate) : null
+        dueDate: formData.dueDate ? formData.dueDate : null
       }
 
       await onSubmit(taskData)
@@ -149,7 +149,7 @@ const TaskForm = ({
           >
             <option value="">No Category</option>
             {categories.map((category) => (
-              <option key={category.Id} value={category.Id}>
+<option key={category.Id} value={category.Id}>
                 {category.name}
               </option>
             ))}

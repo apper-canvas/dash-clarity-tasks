@@ -85,7 +85,10 @@ const TasksPage = () => {
   const handleTaskSubmit = async (taskData) => {
     try {
       if (currentTask) {
-        await taskService.update(currentTask.Id, taskData)
+const updated = await taskService.update(currentTask.Id, taskData)
+        if (updated) {
+          await loadCategories()
+        }
       } else {
         await taskService.create(taskData)
       }
@@ -117,7 +120,10 @@ const TasksPage = () => {
   const handleCategorySubmit = async (categoryData) => {
     try {
       if (currentCategory) {
-        await categoryService.update(currentCategory.Id, categoryData)
+const updated = await categoryService.update(currentCategory.Id, categoryData)
+        if (updated) {
+          await loadCategories()
+        }
       } else {
         await categoryService.create(categoryData)
       }
@@ -133,11 +139,17 @@ const TasksPage = () => {
   const handleConfirmDelete = async () => {
     try {
       if (deleteType === "task") {
-        await taskService.delete(itemToDelete.Id)
-        toast.success("Task deleted successfully")
+const deleted = await taskService.delete(itemToDelete.Id)
+        if (deleted) {
+          toast.success("Task deleted successfully")
+          await loadCategories()
+        }
       } else {
-        await categoryService.delete(itemToDelete.Id)
-        toast.success("Category deleted successfully")
+        const deleted = await categoryService.delete(itemToDelete.Id)
+        if (deleted) {
+          toast.success("Category deleted successfully")
+          await loadCategories()
+        }
       }
       
       setRefreshTrigger(prev => prev + 1)

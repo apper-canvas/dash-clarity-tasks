@@ -44,18 +44,20 @@ const TaskList = ({
   }, [refreshTrigger])
 
   const handleToggleComplete = async (taskId) => {
-    const task = tasks.find(t => t.Id === taskId)
+const task = tasks.find(t => t.Id === taskId)
     if (!task) return
 
-    const updatedTask = {
+const updatedTask = {
       ...task,
       completed: !task.completed,
-      completedAt: !task.completed ? new Date() : null
+      completedAt: !task.completed ? new Date().toISOString() : null
     }
 
     try {
-      await taskService.update(taskId, updatedTask)
-      setTasks(prev => prev.map(t => t.Id === taskId ? updatedTask : t))
+const result = await taskService.update(taskId, updatedTask)
+      if (result) {
+        setTasks(prev => prev.map(t => t.Id === taskId ? result : t))
+      }
     } catch (err) {
       console.error("Error updating task:", err)
     }
@@ -118,8 +120,10 @@ const TaskList = ({
     )
   }
 
-  const getCategoryById = (categoryId) => {
-    return categories.find(cat => cat.Id === categoryId)
+const getCategoryById = (categoryId) => {
+    // Handle both direct ID and lookup object format
+    const id = typeof categoryId === 'object' ? categoryId.Id : categoryId
+    return categories.find(cat => cat.Id === id)
   }
 
   return (

@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import ApperIcon from "@/components/ApperIcon"
 import Button from "@/components/atoms/Button"
 import SearchBar from "@/components/molecules/SearchBar"
-
+import { AuthContext } from "@/App"
 const Header = ({ 
   onCreateTask,
   onSearch,
@@ -12,6 +12,7 @@ const Header = ({
   onMobileMenuToggle
 }) => {
   const [showSearch, setShowSearch] = useState(false)
+  const { logout } = useContext(AuthContext)
 
   return (
     <header className="bg-white border-b border-gray-200 shadow-sm">
@@ -43,7 +44,35 @@ const Header = ({
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-3">
+<div className="hidden md:flex items-center space-x-3">
+            <Button
+              variant="ghost"
+              onClick={() => setShowSearch(!showSearch)}
+              className="flex items-center space-x-2"
+            >
+              <ApperIcon name="Search" className="w-4 h-4" />
+              <span>Search</span>
+            </Button>
+            
+            <Button
+              variant="primary"
+              onClick={onCreateTask}
+              className="flex items-center space-x-2"
+            >
+              <ApperIcon name="Plus" className="w-4 h-4" />
+              <span>Add Task</span>
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={logout}
+              className="flex items-center space-x-2"
+            >
+              <ApperIcon name="LogOut" className="w-4 h-4" />
+              <span>Logout</span>
+            </Button>
+          </div>
+<div className="hidden md:flex items-center space-x-3">
             <Button
               variant="ghost"
               onClick={() => setShowSearch(!showSearch)}
@@ -64,7 +93,35 @@ const Header = ({
           </div>
 
           {/* Mobile Actions */}
-          <div className="md:hidden flex items-center space-x-2">
+<div className="md:hidden flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowSearch(!showSearch)}
+              className="p-2 h-auto"
+            >
+              <ApperIcon name="Search" className="w-5 h-5" />
+            </Button>
+            
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={onCreateTask}
+              className="p-2 h-auto"
+            >
+              <ApperIcon name="Plus" className="w-5 h-5" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={logout}
+              className="p-2 h-auto"
+            >
+              <ApperIcon name="LogOut" className="w-5 h-5" />
+            </Button>
+          </div>
+<div className="md:hidden flex items-center space-x-2">
             <Button
               variant="ghost"
               size="sm"

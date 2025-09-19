@@ -22,10 +22,10 @@ const CategoryForm = ({
   ]
 
   useEffect(() => {
-    if (category) {
+if (category) {
       setFormData({
-        name: category.name,
-        color: category.color
+        name: category.name || "",
+        color: category.color || "#2563eb"
       })
     }
   }, [category])
