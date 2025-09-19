@@ -13,10 +13,11 @@ const TaskForm = ({
   onSubmit, 
   onCancel 
 }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     title: "",
     description: "",
     priority: "medium",
+    status: "Not Started",
     categoryId: "",
     dueDate: ""
   })
@@ -28,7 +29,8 @@ const TaskForm = ({
 setFormData({
         title: task.title || "",
         description: task.description || "",
-        priority: task.priority || "medium",
+priority: task.priority || "medium",
+        status: task.status || "Not Started",
         categoryId: task.categoryId || "",
         dueDate: task.dueDate ? format(new Date(task.dueDate), "yyyy-MM-dd") : ""
       })
@@ -62,7 +64,7 @@ setFormData({
 
     try {
 const taskData = {
-        ...formData,
+...formData,
         dueDate: formData.dueDate ? formData.dueDate : null
       }
 
@@ -72,8 +74,9 @@ const taskData = {
       if (!task) {
         setFormData({
           title: "",
-          description: "",
+description: "",
           priority: "medium",
+          status: "Not Started",
           categoryId: "",
           dueDate: ""
         })
@@ -156,8 +159,22 @@ const taskData = {
           </Select>
         </FormField>
       </div>
+<FormField 
+        label="Status" 
+        error={errors.status}
+      >
+        <Select
+          value={formData.status}
+          onChange={(e) => handleChange("status", e.target.value)}
+        >
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="On Hold">On Hold</option>
+        </Select>
+      </FormField>
 
-      <FormField 
+      <FormField
         label="Due Date" 
         error={errors.dueDate}
       >
