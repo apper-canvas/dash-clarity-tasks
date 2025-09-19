@@ -17,10 +17,11 @@ class TaskService {
       const client = this.getClient();
       const params = {
         fields: [
-          {"field": {"Name": "Name"}},
+{"field": {"Name": "Name"}},
           {"field": {"Name": "title_c"}},
           {"field": {"Name": "description_c"}},
           {"field": {"Name": "completed_c"}},
+          {"field": {"Name": "status_c"}},
           {"field": {"Name": "priority_c"}},
           {"field": {"Name": "due_date_c"}},
           {"field": {"Name": "created_at_c"}},
@@ -44,7 +45,8 @@ class TaskService {
         description: task.description_c || '',
         completed: task.completed_c || false,
         priority: task.priority_c || 'medium',
-        categoryId: task.category_id_c?.Id || task.category_id_c || null,
+categoryId: task.category_id_c?.Id || task.category_id_c || null,
+        status: task.status_c || 'Not Started',
         dueDate: task.due_date_c || null,
         createdAt: task.created_at_c || task.CreatedOn || new Date(),
         completedAt: task.completed_at_c || null
@@ -61,10 +63,11 @@ class TaskService {
       const client = this.getClient();
       const params = {
         fields: [
-          {"field": {"Name": "Name"}},
+{"field": {"Name": "Name"}},
           {"field": {"Name": "title_c"}},
           {"field": {"Name": "description_c"}},
           {"field": {"Name": "completed_c"}},
+          {"field": {"Name": "status_c"}},
           {"field": {"Name": "priority_c"}},
           {"field": {"Name": "due_date_c"}},
           {"field": {"Name": "created_at_c"}},
@@ -86,8 +89,9 @@ class TaskService {
       return {
         Id: task.Id,
         title: task.title_c || task.Name || '',
-        description: task.description_c || '',
+description: task.description_c || '',
         completed: task.completed_c || false,
+        status: task.status_c || 'Not Started',
         priority: task.priority_c || 'medium',
         categoryId: task.category_id_c?.Id || task.category_id_c || null,
         dueDate: task.due_date_c || null,
@@ -110,7 +114,8 @@ class TaskService {
         Name: taskData.title || '',
         title_c: taskData.title || '',
         description_c: taskData.description || '',
-        completed_c: false,
+completed_c: false,
+        status_c: taskData.status || 'Not Started',
         priority_c: taskData.priority || 'medium',
         category_id_c: taskData.categoryId ? parseInt(taskData.categoryId) : null,
         due_date_c: taskData.dueDate || null,
@@ -149,7 +154,8 @@ class TaskService {
             Id: createdTask.Id,
             title: createdTask.title_c || createdTask.Name || '',
             description: createdTask.description_c || '',
-            completed: createdTask.completed_c || false,
+completed: createdTask.completed_c || false,
+            status: createdTask.status_c || 'Not Started',
             priority: createdTask.priority_c || 'medium',
             categoryId: createdTask.category_id_c?.Id || createdTask.category_id_c || null,
             dueDate: createdTask.due_date_c || null,
@@ -174,9 +180,10 @@ class TaskService {
       const dbTaskData = {
         Id: id,
         Name: taskData.title || taskData.Name || '',
-        title_c: taskData.title || '',
+title_c: taskData.title || '',
         description_c: taskData.description || '',
         completed_c: taskData.completed !== undefined ? taskData.completed : false,
+        status_c: taskData.status || 'Not Started',
         priority_c: taskData.priority || 'medium',
         category_id_c: taskData.categoryId ? parseInt(taskData.categoryId) : null,
         due_date_c: taskData.dueDate || null,
@@ -213,8 +220,9 @@ class TaskService {
           return {
             Id: updatedTask.Id,
             title: updatedTask.title_c || updatedTask.Name || '',
-            description: updatedTask.description_c || '',
+description: updatedTask.description_c || '',
             completed: updatedTask.completed_c || false,
+            status: updatedTask.status_c || 'Not Started',
             priority: updatedTask.priority_c || 'medium',
             categoryId: updatedTask.category_id_c?.Id || updatedTask.category_id_c || null,
             dueDate: updatedTask.due_date_c || null,

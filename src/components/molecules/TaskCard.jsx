@@ -87,8 +87,7 @@ const TaskCard = ({
                   {task.description}
                 </p>
               )}
-              
-              <div className="flex items-center space-x-2 text-xs">
+<div className="flex items-center space-x-2 text-xs">
                 {category && (
                   <Badge 
                     variant="default"
@@ -103,6 +102,17 @@ const TaskCard = ({
                     {category.name}
                   </Badge>
                 )}
+                
+                <Badge 
+                  variant={
+                    task.status === "Completed" ? "success" : 
+                    task.status === "In Progress" ? "primary" : 
+                    task.status === "On Hold" ? "warning" : "default"
+                  } 
+                  size="sm"
+                >
+                  {task.status || 'Not Started'}
+                </Badge>
                 
                 <Badge variant={task.priority} size="sm">
                   {task.priority}
